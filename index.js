@@ -2,8 +2,9 @@ module.exports = function blockLevelOneWhispers(dispatch) {
 
   var name;
   var cid;
+  var serverId;
   var whisperQueues = {};
-  var debug = true;
+  var debug = false;
   var HiddenName;
 
   if(debug) {
@@ -13,7 +14,7 @@ module.exports = function blockLevelOneWhispers(dispatch) {
   }
 
   dispatch.hook('S_LOGIN', 1, (event) => {
-    ({name, cid} = event);
+    ({name, cid, serverId} = event);
   });
 
   dispatch.hook('S_WHISPER', 1, (event) => {
@@ -23,7 +24,7 @@ module.exports = function blockLevelOneWhispers(dispatch) {
       whisperQueues[event.author].push(event.message);
       dispatch.toServer('C_ASK_INTERACTIVE', 1, {
         unk1: 1,
-        unk2: 4012, // 501 for RU
+        unk2: serverId, // 4012 NA, 501 RU
         name: event.author
       });
 	  if(debug && HiddenName) 
