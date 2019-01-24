@@ -1,7 +1,7 @@
 module.exports = function blockLevelOneWhispers(dispatch) {
 
   var name;
-  var cid;
+  var gameId;
   var serverId;
   var whisperQueues = {};
   var debug = false;
@@ -13,8 +13,8 @@ module.exports = function blockLevelOneWhispers(dispatch) {
     });
   }
 
-  dispatch.hook('S_LOGIN', 1, (event) => {
-    ({name, cid, serverId} = event);
+  dispatch.hook('S_LOGIN', 12, (event) => {
+    ({name, gameId, serverId} = event);
   });
 
   dispatch.hook('S_WHISPER', 1, (event) => {
@@ -41,7 +41,7 @@ module.exports = function blockLevelOneWhispers(dispatch) {
       if(event.level > 1) {
         while(whisperQueues[event.name].length > 0) {
           dispatch.toClient('S_WHISPER', 1, {
-            player: cid,
+            player: gameId,
             unk1: 0,
             gm: 0,
             unk2: 0,
