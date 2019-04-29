@@ -1,0 +1,12 @@
+{
+	"disableAutoUpdate": false,
+	"name": "block-level-1-whispers",
+	"author": "Owyn",
+	"description": "Hides whispers from level 1 characters ",
+	"options": {
+		"niceName": "block-level-1-whispers",
+		"guiName": "block-level-1-whispers"
+	},
+	"servers": ["https://raw.githubusercontent.com/Lambda11/block-level-1-whispers/master/"],
+	"supportUrl": "https://github.com/Lambda11/block-level-1-whispers/issues"
+}
