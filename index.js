@@ -8,7 +8,7 @@ module.exports = function blockLevelOneWhispers(dispatch) {
   var HiddenName;
 
   if(debug) {
-    dispatch.hook('C_ASK_INTERACTIVE', 1, (event) => {
+    dispatch.hook('C_ASK_INTERACTIVE', 2, (event) => {
       console.log(event);
     });
   }
@@ -17,21 +17,21 @@ module.exports = function blockLevelOneWhispers(dispatch) {
     ({name, gameId, serverId} = event);
   });
 
-  dispatch.hook('S_WHISPER', 1, (event) => {
-    if(event.author !== name) {
-      if(!(whisperQueues[event.author]))
-        whisperQueues[event.author] = [];
-      whisperQueues[event.author].push(event.message);
-      dispatch.toServer('C_ASK_INTERACTIVE', 1, {
+  dispatch.hook('S_WHISPER', 3, (event) => {
+    if(event.name !== name) {
+      if(!(whisperQueues[event.name]))
+        whisperQueues[event.name] = [];
+      whisperQueues[event.name].push(event.message);
+      dispatch.toServer('C_ASK_INTERACTIVE', 2, {
         unk1: 1,
-        unk2: serverId, // 4012 NA, 501 RU
-        name: event.author
+        serverId: serverId, // 4012 NA, 501 RU
+        name: event.name
       });
 	  if(debug && HiddenName) 
 	  {
-		  console.log(HiddenName + " is already waiting for response, ERROR, replaced with: " + event.author);
+		  console.log(HiddenName + " is already waiting for response, ERROR, replaced with: " + event.name);
 	  }
-	  HiddenName = event.author;
+	  HiddenName = event.name;
       return false;
     }
   });
@@ -40,12 +40,12 @@ module.exports = function blockLevelOneWhispers(dispatch) {
     if(whisperQueues[event.name] && whisperQueues[event.name].length > 0){
       if(event.level > 1) {
         while(whisperQueues[event.name].length > 0) {
-          dispatch.toClient('S_WHISPER', 1, {
-            player: gameId,
-            unk1: 0,
-            gm: 0,
-            unk2: 0,
-            author: event.name,
+          dispatch.toClient('S_WHISPER', 3, {
+            gameId: gameId,
+            isWorldEventTarget: false,
+            gm: false,
+            founder: false,
+            name: event.name,
             recipient: name,
             message: whisperQueues[event.name].shift()
           });
@@ -71,7 +71,7 @@ module.exports = function blockLevelOneWhispers(dispatch) {
 		return false;
 	}
     /*if(whisperQueues[event.name] && whisperQueues[event.name].length == 0)
-      delete whisperQueues.author;
+      delete whisperQueues.name;
     */
   });
 }

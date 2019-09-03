@@ -1,13 +1,13 @@
 {
 	"files": {
 		"README.md": "c16593649c9e0ed088023aaebf6b62f4250f416f2e86be354633a797d83bdd06",
-		"index.js": "af9a0343a20527748be7cadf334f3a0b8f8359b9f026994740df4f6bdab09972",
+		"index.js": "8650cce0953d30b086036c4d68da57aae163a550b287cfa1065a4af2e53a7d01",
 		"module.json": "34db7e50a13e8c48f0a6b461cecfdce2e45e4d8e53ed5667e2863368a4ffec4f"
 	},
 	"defs": {
-		"C_ASK_INTERACTIVE": 1,
+		"C_ASK_INTERACTIVE": 2,
 		"S_ANSWER_INTERACTIVE": 2,
 		"S_LOGIN": [12,13],
-		"S_WHISPER": 1
+		"S_WHISPER": 3
 	}
 }
