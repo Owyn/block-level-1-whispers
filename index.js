@@ -13,7 +13,7 @@ module.exports = function blockLevelOneWhispers(dispatch) {
     });
   }
 
-  dispatch.hook('S_LOGIN', dispatch.majorPatchVersion >= 81 ? 13 : 12, (event) => {
+  dispatch.hook('S_LOGIN', dispatch.majorPatchVersion >= 86 ? 14 : 13, (event) => {
     ({name, gameId, serverId} = event);
   });
 
